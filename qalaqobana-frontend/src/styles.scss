@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: "BPG Mikheil Stefane", sans-serif;
+  // font-family: "BPG Mrgvlovani", sans-serif;
+}
+
+/* Add Google Fonts */
+@import url("//cdn.web-fonts.ge/fonts/bpg-mikheil-stefane/css/bpg-mikheil-stefane.min.css");
+@import url("//cdn.web-fonts.ge/fonts/bpg-mrgvlovani/css/bpg-mrgvlovani.min.css");
+
+

@@ -1,0 +1,92 @@
+<div class="min-h-screen bg-cover bg-center relative overflow-hidden"
+  style="background-image: url('../../../assets/Flux_Dev_a_lush_3d_render_of_A_modern_flatstyle_digital_illust_1.jpg')">
+  <!-- Overlay for better text readability -->
+  <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-pink-900/10 to-blue-900/20 backdrop-blur-[1px]"></div>
+
+  <!-- Main content container -->
+  <div class="relative z-10 min-h-screen flex flex-col">
+    <!-- Header with logo and auth -->
+    <header class="flex justify-between items-center p-6 md:p-8">
+      <h1 class="text-6xl md:text:6xl font-extrabold text-white drop-shadow-xl tracking-tight">
+        ქალაქობანა
+      </h1>
+
+      <div class="flex items-center space-x-4">
+        <ng-container *ngIf="!userName; else userMenu">
+          <button mat-stroked-button color="primary" 
+                  class="text-white border-white/50 rounded-md hover:border-white hover:bg-white/5 transition-all"
+                  routerLink="/auth/login">
+            <span class="text-lg">შესვლა</span>
+          </button>
+          <button mat-flat-button color="primary" 
+                  class="text-purple-900 bg-white hover:bg-white/90 transition-all"
+                  routerLink="/auth/register">
+            <span class="text-lg">რეგისტრაცია</span>
+          </button>
+        </ng-container>
+        <ng-template #userMenu>
+          <div class="flex items-center gap-4">
+            <span class="text-xl font-extrabold md:text-2xl text-white drop-shadow-md">{{ userName }}</span>
+            <button aria-label="Logout" (click)="logout()"
+                    class="hover:bg-white/10 transition-all">
+
+              <svg class="w-6 mb-1 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" 
+                      d="M8.25 9V5.25A2.25 2.25 0 0110.5 3h6a2.25 2.25 0 012.25 2.25v13.5A2.25 2.25 0 0116.5 21h-6a2.25 2.25 0 01-2.25-2.25V15m-3 0l-3-3m0 0l3-3m-3 3H15"/>
+              </svg>
+            </button>
+          </div>
+        </ng-template>
+      </div>
+    </header>
+
+    <!-- Main call-to-action section -->
+    <main class="flex flex-col justify-center p-6 mb-10 md:p-12 max-w-3xl mx-auto w-full">
+      <div class="mb-16 text-center">
+        <div class="inline-block px-6 py-3 bg-white/10 backdrop-blur-sm rounded-full mb-6">
+          <span class="text-xl text-white/90">მოგესალმებით</span>
+        </div>
+        <p class="text-2xl md:text-3xl text-white/80 max-w-2xl mx-auto" style="line-height: 3.25rem">
+          შემოგვიერთდით სიტყვების მაგიურ თამაშში, სადაც ყოველი ასო იქცევა გამარჯვებად!
+        </p>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-6 justify-center">
+        <!-- Create Game Button -->
+        <button 
+          class="px-8 py-4 w-full md:w-auto text-xl flex items-center justify-center gap-3 rounded-xl shadow-xl
+                 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white
+                 transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl active:scale-100 group"
+          (click)="navigateToGame('/game/create')">
+          <div class="p-2 bg-white/20 rounded-full group-hover:bg-white/30 transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="font-extrabold">თამაშის შექმნა</div>
+            <div class="text-base font-light opacity-90">შექმენით ახალი თამაშის ცხრილი</div>
+          </div>
+        </button>
+
+        <!-- Join Game Button -->
+        <button 
+          class="px-8 py-4 w-full md:w-auto text-xl flex items-center justify-center gap-3 rounded-xl shadow-xl
+                 bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 text-white
+                 transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl active:scale-100 group"
+          (click)="navigateToGame('/game/join')">
+          <div class="p-2 bg-white/20 rounded-full group-hover:bg-white/30 transition-all">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M18 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM3 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 019.374 21c-2.331 0-4.512-.645-6.374-1.766z"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="font-extrabold">თამაშში შემოსვლა</div>
+            <div class="text-base font-light opacity-90">შეუერთდით არსებულ თამაშს</div>
+          </div>
+        </button>
+      </div>
+    </main>
+  </div>
+</div>

@@ -1,0 +1,125 @@
+<div class="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat relative"
+  style="background-image: url('../../../assets/Flux_Dev_a_lush_3d_render_of_A_modern_flatstyle_digital_illust_1.jpg')">
+
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-indigo-900/20 to-blue-900/30 backdrop-blur-sm">
+  </div>
+
+  <!-- Registration Card -->
+  <div class="relative z-10 w-full max-w-md px-6 py-12 sm:px-8">
+    <div class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded-3xl shadow-2xl">
+      <div class="bg-white/80 backdrop-blur-xl rounded-3xl p-8 sm:p-10 shadow-inner">
+
+        <h2 class="text-center text-3xl font-extrabold text-gray-900 mb-6">შექმენი ანგარიში</h2>
+
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="space-y-5">
+          <!-- Username -->
+          <div>
+            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">მომხმარებლის სახელი</label>
+            <input id="username" type="text" formControlName="username" placeholder="მაგ: ჯონი"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <div class="text-red-500 text-sm mt-1"
+              *ngIf="registerForm.get('username')?.touched && registerForm.get('username')?.invalid">
+              <div *ngIf="registerForm.get('username')?.hasError('required')">მომხმარებლის სახელი სავალდებულოა</div>
+              <div *ngIf="registerForm.get('username')?.hasError('minlength')">მინიმუმ 3 სიმბოლო</div>
+            </div>
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">ელ-ფოსტა</label>
+            <input id="email" type="email" formControlName="email" placeholder="მაგ: john@example.com"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            <div class="text-red-500 text-sm mt-1"
+              *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.invalid">
+              <div *ngIf="registerForm.get('email')?.hasError('required')">ელ-ფოსტა სავალდებულოა</div>
+              <div *ngIf="registerForm.get('email')?.hasError('email')">გთხოვთ სწორი ელ-ფოსტა</div>
+            </div>
+          </div>
+
+          <!-- Password -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">პაროლი</label>
+            <div class="relative">
+              <input id="password" [type]="hidePassword ? 'password' : 'text'" formControlName="password"
+                placeholder="შეიყვანეთ პაროლი"
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 pr-10 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent" />
+              <button type="button" (click)="hidePassword = !hidePassword"
+                class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-indigo-600" tabindex="-1">
+                <svg *ngIf="hidePassword" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                  stroke-width="1.5" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path
+                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <svg *ngIf="!hidePassword" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                  stroke-width="1.5" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path
+                    d="M3 3l18 18M10.477 10.477A3 3 0 0113.5 13.5M6.84 6.84A7.963 7.963 0 004.04 12.32a1.012 1.012 0 000 .639C5.423 16.49 9.36 19.5 14 19.5a9.037 9.037 0 005.664-2.004M9.88 9.88a3 3 0 104.24 4.24"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+            <div class="text-red-500 text-sm mt-1"
+              *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.invalid">
+              <div *ngIf="registerForm.get('password')?.hasError('required')">პაროლი სავალდებულოა</div>
+              <div *ngIf="registerForm.get('password')?.hasError('minlength')">მინიმუმ 6 სიმბოლო</div>
+            </div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div>
+            <label for="confirmPassword" class="block text-sm font-medium text-gray-700 mb-1">დაადასტურე პაროლი</label>
+            <div class="relative">
+              <input id="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'"
+                formControlName="confirmPassword" placeholder="გაიმეორეთ პაროლი"
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 pr-10 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              <button type="button" (click)="hideConfirmPassword = !hideConfirmPassword"
+                class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-indigo-600" tabindex="-1">
+                <svg *ngIf="hideConfirmPassword" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                  stroke-width="1.5" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path
+                    d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                  <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <svg *ngIf="!hideConfirmPassword" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor"
+                  stroke-width="1.5" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path
+                    d="M3 3l18 18M10.477 10.477A3 3 0 0113.5 13.5M6.84 6.84A7.963 7.963 0 004.04 12.32a1.012 1.012 0 000 .639C5.423 16.49 9.36 19.5 14 19.5a9.037 9.037 0 005.664-2.004M9.88 9.88a3 3 0 104.24 4.24"
+                    stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+              </button>
+            </div>
+            <div class="text-red-500 text-sm mt-1" *ngIf="registerForm.get('confirmPassword')?.touched">
+              <div *ngIf="registerForm.get('confirmPassword')?.hasError('required')">დადასტურება სავალდებულოა</div>
+              <div *ngIf="registerForm.hasError('mismatch')">პაროლები არ ემთხვევა</div>
+            </div>
+          </div>
+
+
+          <!-- Submit -->
+          <button type="submit"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-300 flex items-center justify-center"
+            [disabled]="!registerForm.valid || isLoading">
+            <svg *ngIf="isLoading" class="animate-spin mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg"
+              fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+            </svg>
+            <span>რეგისტრაცია</span>
+          </button>
+
+          <!-- Login link -->
+          <div class="text-center">
+            <button type="button" (click)="navigateToLogin()" class="text-sm mt-2">
+              უკვე გაქვთ ანგარიში? შედით <span class="text-indigo-600 hover:underline text-sm">ავტორიზაციაზე</span>
+            </button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>

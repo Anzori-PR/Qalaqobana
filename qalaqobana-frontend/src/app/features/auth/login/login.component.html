@@ -1,0 +1,107 @@
+<div class="min-h-screen flex items-center justify-center bg-cover bg-center bg-no-repeat relative"
+  style="background-image: url('../../../assets/Flux_Dev_a_lush_3d_render_of_A_modern_flatstyle_digital_illust_1.jpg')">
+  
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-gradient-to-br from-purple-900/30 via-indigo-900/20 to-blue-900/30 backdrop-blur-sm"></div>
+
+  <!-- Gradient wrapper with glow -->
+  <div class="relative z-10 w-full max-w-md px-6 py-12 sm:px-8">
+    <div class="bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 p-[1px] rounded-3xl shadow-2xl">
+      <div class="bg-white/80 backdrop-blur-xl rounded-3xl p-8 sm:p-10 shadow-inner">
+        
+        <!-- Header -->
+        <div class="text-center mb-8">
+          <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-indigo-100 mb-4 shadow">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-indigo-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 11c0 3.517-1.009 6.799-2.753 9.571m-3.44-2.04l.054-.09A13.916 13.916 0 008 11a4 4 0 118 0c0 1.017-.07 2.019-.203 3m-2.118 6.844A21.88 21.88 0 0015.171 17m3.839 1.132c.645-2.266.99-4.659.99-7.132A8 8 0 008 4.07M3 15.364c.64-1.319 1-2.8 1-4.364 0-1.457.39-2.823 1.07-4" />
+            </svg>
+          </div>
+          <h2 class="text-3xl font-bold text-gray-800">
+            კეთილი იყოს თქვენი მობრძანება
+          </h2>
+          <p class="mt-2 text-gray-600">გთხოვთ შეიყვანოთ თქვენი მონაცემები</p>
+        </div>
+
+        <!-- Login Form -->
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6">
+
+          <!-- Email -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 mb-1">ელ-ფოსტა</label>
+            <div class="relative">
+              <input
+                id="email"
+                type="email"
+                formControlName="email"
+                placeholder="მაგ: john@example.com"
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+            </div>
+            <div class="text-red-500 text-sm mt-1" *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.invalid">
+              <div *ngIf="loginForm.get('email')?.hasError('required')">ელ-ფოსტა სავალდებულოა</div>
+              <div *ngIf="loginForm.get('email')?.hasError('email')">გთხოვთ შეიყვანოთ სწორი ელ-ფოსტის მისამართი</div>
+            </div>
+          </div>
+        
+          <!-- Password -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">პაროლი</label>
+            <div class="relative">
+              <input
+                id="password"
+                [type]="hidePassword ? 'password' : 'text'"
+                formControlName="password"
+                placeholder="შეიყვანეთ პაროლი"
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 text-gray-900 placeholder-gray-400 shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              />
+              <button
+                type="button"
+                (click)="hidePassword = !hidePassword"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-indigo-600"
+                tabindex="-1"
+              >
+                <svg *ngIf="hidePassword" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path d="M2.036 12.322a1.012 1.012 0 0 1 0-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178Z" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <svg *ngIf="!hidePassword" xmlns="http://www.w3.org/2000/svg" fill="none" stroke-width="1.5" stroke="currentColor" class="w-5 h-5" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M3 3l18 18M10.477 10.477A3 3 0 0113.5 13.5M6.84 6.84A7.963 7.963 0 004.04 12.32a1.012 1.012 0 000 .639C5.423 16.49 9.36 19.5 14 19.5a9.037 9.037 0 005.664-2.004M9.88 9.88a3 3 0 104.24 4.24" />
+                </svg>
+              </button>
+            </div>
+            <div class="text-red-500 text-sm mt-1" *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.invalid">
+              <div *ngIf="loginForm.get('password')?.hasError('required')">პაროლი სავალდებულოა</div>
+              <div *ngIf="loginForm.get('password')?.hasError('minlength')">მინიმუმ 6 სიმბოლო</div>
+            </div>
+          </div>
+        
+          <!-- Submit -->
+          <button
+            type="submit"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 px-4 rounded-lg shadow-lg transition duration-300"
+            [disabled]="!loginForm.valid || isLoading"
+          >
+            <div class="flex items-center justify-center">
+              <svg *ngIf="isLoading" class="animate-spin mr-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+              </svg>
+              <span>შესვლა</span>
+            </div>
+          </button>
+        
+          <!-- Register -->
+          <div class="text-center text-sm text-gray-600">
+            არ გაქვთ ანგარიში?
+            <button type="button" (click)="navigateToRegister()" class="text-indigo-600 hover:underline font-medium ml-1">
+              დარეგისტრირდით
+            </button>
+          </div>
+        
+        </form>
+        
+      </div>
+    </div>
+  </div>
+</div>
