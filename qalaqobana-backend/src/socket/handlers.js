@@ -160,25 +160,25 @@ module.exports = function initializeSocket(io) {
     socket.on("updateScore", async ({ roomCode, userId, newScore }) => {
       if (!totalScores[roomCode]) totalScores[roomCode] = {};
       totalScores[roomCode][userId] = newScore;
-    
+
       // Optional: emit leaderboard if you still want it
       const leaderboard = Object.entries(totalScores[roomCode]).map(([userId, score]) => ({
         userId,
         score
       }));
       io.to(roomCode).emit("leaderboardUpdate", leaderboard);
-    
+
       // Send fresh roomUpdate with updated scores
       const room = await Game.findOne({ roomCode });
       if (!room) return;
-    
+
       const users = await User.find({ _id: { $in: room.players } });
       const playersInfo = users.map(user => ({
         userId: user._id.toString(),
         username: user.username,
         score: totalScores[roomCode][user._id.toString()] || 0
       }));
-    
+
       io.to(roomCode).emit("roomUpdate", {
         roomCode,
         players: playersInfo,
@@ -187,8 +187,8 @@ module.exports = function initializeSocket(io) {
         chatHistory: room.chatMessages || []
       });
     });
-    
-    
+
+
 
     // Draft Answers
     socket.on('draftAnswers', ({ roomCode, userId, draft }) => {

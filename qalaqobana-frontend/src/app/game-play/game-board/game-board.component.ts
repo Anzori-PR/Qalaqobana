@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { SocketService } from '../../core/services/socket.service';
 import { AuthService } from '../../core/services/auth.service';
@@ -35,7 +35,8 @@ throw new Error('Method not implemented.');
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private socket: SocketService,
-    private auth: AuthService
+    private auth: AuthService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +54,7 @@ throw new Error('Method not implemented.');
     
     this.setupSocketListeners();
   }
+  
 
   setupSocketListeners() {
     this.socket.on('gameStarted', (data: { letter: string; categories: string[] }) => {
@@ -100,19 +102,21 @@ throw new Error('Method not implemented.');
     });
 
     this.socket.on('roomUpdate', (data: any) => {
-      // Preserve scores when updating players
-      this.players = (data.players || []).map((player: any) => {
-        const existing = this.players.find(p => p.userId === player.userId);
+      this.players = data.players || [];
+    
+      // Update scores if needed
+      this.players = this.players.map(player => {
         const leaderboardEntry = this.leaderboard.find(lb => lb.userId === player.userId);
         return {
           ...player,
-          score: leaderboardEntry?.score ?? existing?.score ?? 0
+          score: leaderboardEntry?.score ?? player.score ?? 0
         };
       });
-  
+    
       this.categories = data.categories || [];
       this.creatorId = data.creatorId;
     });
+    
   
     this.socket.on('leaderboardUpdate', (data: any[]) => {
       this.leaderboard = data;
@@ -219,15 +223,6 @@ throw new Error('Method not implemented.');
   isCreator(): boolean {
     return this.auth.getUserId() === this.creatorId;
   }
-
-  editScore(player: any) {
-    player.isEditing = true;
-    player.newScore = player.score || 0;
-  }
-  
-  cancelEdit(player: any) {
-    player.isEditing = false;
-  }
   
   saveScore(player: any) {
     player.score = Number(player.newScore) || 0;
@@ -240,5 +235,12 @@ throw new Error('Method not implemented.');
     });
   }
   
+  enableEditMode() {
+    if (!this.isCreator()) return;
+    this.players.forEach(player => {
+      player.isEditing = true;
+      player.newScore = player.score || 0;
+    });
+  }  
   
 }
