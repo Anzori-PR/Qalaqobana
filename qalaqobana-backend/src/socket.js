@@ -4,7 +4,9 @@ const gameSocketHandlers = require("./socket/handlers");
 function initSocket(server) {
   const io = new Server(server, {
     cors: {
-      origin: "*",
+      origin: process.env.CLIENT_URL,
+      methods: ['GET', 'POST'],
+      credentials: true,
     },
   });
 

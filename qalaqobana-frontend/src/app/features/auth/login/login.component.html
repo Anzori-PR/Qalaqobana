@@ -90,6 +90,11 @@
               <span>შესვლა</span>
             </div>
           </button>
+
+          <!-- errors -->
+          <div *ngIf="serverErrorMessage" class="text-red-600 text-sm mb-4 text-center">
+            {{ serverErrorMessage }}
+          </div>
         
           <!-- Register -->
           <div class="text-center text-sm text-gray-600">

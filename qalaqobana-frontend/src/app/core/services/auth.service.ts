@@ -30,7 +30,8 @@ export class AuthService {
   }
 
   register(username: string, email: string, password: string): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, { username, email, password }).pipe(
+    return this.http.post<AuthResponse>(`${this.apiUrl}/register`, { username, email, password }, { withCredentials: true })
+    .pipe(
       tap(response => {
         localStorage.setItem('currentUser', JSON.stringify(response));
         this.currentUserSubject.next(response);
@@ -39,10 +40,9 @@ export class AuthService {
   }
 
   login(email: string, password: string): Observable<AuthResponse> {
-    console.log('Sending login request with:', { email, password: '***' });
-    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password }).pipe(
+    return this.http.post<AuthResponse>(`${this.apiUrl}/login`, { email, password }, { withCredentials: true })
+    .pipe(
       tap(response => {
-        console.log('Login response received:', response);
         localStorage.setItem('currentUser', JSON.stringify(response));
         this.currentUserSubject.next(response);
       })

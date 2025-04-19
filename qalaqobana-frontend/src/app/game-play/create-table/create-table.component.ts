@@ -12,6 +12,8 @@ export class CreateTableComponent {
   roomCode: string | null = null;
   error: string | null = null;
   categories = ['ქალაქი', 'სოფელი', 'სახელი', 'ცხოველი', 'მცენარე'];
+  customCategories: string[] = [];
+  newCategoryInput = '';
 
   constructor(private fb: FormBuilder, private socket: SocketService, private router: Router) {
     const group: any = {};
@@ -19,10 +21,23 @@ export class CreateTableComponent {
     this.form = this.fb.group(group);
   }
 
+  addCustomCategory() {
+    const newCat = this.newCategoryInput.trim();
+    if (newCat && !this.categories.includes(newCat) && !this.customCategories.includes(newCat)) {
+      this.customCategories.push(newCat);
+      this.form.addControl(newCat, this.fb.control(false));
+      this.newCategoryInput = '';
+    }
+  }
+
+  removeCustomCategory(cat: string) {
+    this.customCategories = this.customCategories.filter(c => c !== cat);
+    this.form.removeControl(cat);
+  }
+
   onSubmit() {
     const selected = Object.keys(this.form.value).filter(k => this.form.value[k]);
-    
-    // Validate at least 2 categories selected
+
     if (selected.length < 2) {
       this.error = "გთხოვთ აირჩიოთ მინიმუმ 2 კატეგორია";
       return;
@@ -33,17 +48,17 @@ export class CreateTableComponent {
       this.error = "მომხმარებელი არ მოიძებნა. გთხოვთ თავიდან შეხვიდეთ სისტემაში.";
       return;
     }
-  
+
     const user = JSON.parse(userStr);
     const userId = user?.user?.id;
-  
+
     if (!userId) {
       this.error = "მომხმარებლის ID არ მოიძებნა. გთხოვთ თავიდან შეხვიდეთ სისტემაში.";
       return;
     }
-  
-    this.error = null; // Clear any previous errors
-  
+
+    this.error = null;
+
     this.socket.emit('createRoom', { userId, categories: selected }, (res: any) => {
       if (res.success) {
         this.roomCode = res.roomCode;

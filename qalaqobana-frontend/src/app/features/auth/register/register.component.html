@@ -111,6 +111,12 @@
             <span>რეგისტრაცია</span>
           </button>
 
+          <!-- Server Error Message -->
+          <div *ngIf="serverErrorMessage" class="text-red-600 text-sm text-center font-medium">
+            {{ serverErrorMessage }}
+          </div>
+
+
           <!-- Login link -->
           <div class="text-center">
             <button type="button" (click)="navigateToLogin()" class="text-sm mt-2">

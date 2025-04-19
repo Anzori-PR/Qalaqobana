@@ -65,7 +65,6 @@ throw new Error('Method not implemented.');
         Object.fromEntries(categories.map((c) => [c, '']))
       );
       this.roundEnded = false;
-      this.startTimer(60); // 60 second round
 
       this.form.valueChanges.subscribe((value) => {
         this.socket.emit('draftAnswers', {
@@ -181,17 +180,6 @@ throw new Error('Method not implemented.');
   }
 
     this.socket.emit('stopRound', { roomCode: this.roomCode });
-  }
-
-  startTimer(seconds: number) {
-    this.timeLeft = seconds;
-    this.timer = setInterval(() => {
-      if (this.timeLeft! > 0) {
-        this.timeLeft!--;
-      } else {
-        this.stopRound();
-      }
-    }, 1000);
   }
 
   // Function to copy the room code to the clipboard

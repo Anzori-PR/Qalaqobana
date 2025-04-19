@@ -13,6 +13,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   hidePassword = true;
   isLoading = false;
+  serverErrorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
@@ -29,26 +30,23 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   onSubmit(): void {
+    this.serverErrorMessage = null;
+
     if (this.loginForm.valid) {
       this.isLoading = true;
       const { email, password } = this.loginForm.value;
-      
-      console.log('Submitting login form with:', { email, password: '***' });
-      
+
       this.authService.login(email, password).subscribe({
         next: () => {
-          this.snackBar.open('Login successful!', 'Close', { duration: 3000 });
           this.router.navigate(['/Home']);
         },
         error: (error) => {
-          console.error('Login error:', error);
-          this.snackBar.open(error.error?.message || 'Login failed', 'Close', { duration: 3000 });
+          this.serverErrorMessage = error.error?.message || 'დაფიქსირდა შეცდომა';
           this.isLoading = false;
         }
       });
     } else {
-      console.log('Form validation errors:', this.loginForm.errors);
-      this.snackBar.open('Please fill in all required fields correctly', 'Close', { duration: 3000 });
+      this.serverErrorMessage = 'გთხოვთ სწორად შეავსოთ ყველა ველი';
     }
   }
 

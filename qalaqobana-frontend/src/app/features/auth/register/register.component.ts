@@ -14,12 +14,12 @@ export class RegisterComponent implements OnInit {
   hidePassword = true;
   hideConfirmPassword = true;
   isLoading = false;
+  serverErrorMessage: string | null = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
     private authService: AuthService,
-    private snackBar: MatSnackBar
   ) {
     this.registerForm = this.fb.group({
       username: ['', [Validators.required, Validators.minLength(3)]],
@@ -38,17 +38,20 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(): void {
+    this.serverErrorMessage = null; // Clear old errors
+
     if (this.registerForm.valid) {
       this.isLoading = true;
       const { username, email, password } = this.registerForm.value;
-      
+
       this.authService.register(username, email, password).subscribe({
         next: () => {
-          this.snackBar.open('Registration successful!', 'Close', { duration: 3000 });
+          this.serverErrorMessage = 'Registration successful!', 'Close', { duration: 3000 };
           this.router.navigate(['/Home']);
         },
         error: (error) => {
-          this.snackBar.open(error.error.message || 'Registration failed', 'Close', { duration: 3000 });
+          // Safely extract error message
+          this.serverErrorMessage = error?.error?.message || 'რეგისტრაცია ვერ შესრულდა';
           this.isLoading = false;
         }
       });
