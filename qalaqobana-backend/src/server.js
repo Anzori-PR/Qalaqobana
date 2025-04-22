@@ -27,7 +27,7 @@ const connectDB = async () => {
 
 // Middleware
 app.use(cors({
-  origin: 'https://qalaqobana.vercel.app/Home',
+  origin: 'https://qalaqobana.vercel.app',
   credentials: true
 }));
 app.use(express.json());
