@@ -26,37 +26,10 @@ const connectDB = async () => {
 };
 
 // Middleware
-const allowedOrigins = [
-  'http://localhost:4200',
-  'https://qalaqobana.vercel.app'
-];
-
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
-
-app.options('*', cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
+  origin: 'https://qalaqobana.vercel.app/Home',
   credentials: true
 }));
-
-
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -65,7 +38,7 @@ app.use(express.urlencoded({ extended: true }));
 const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    methods: ['GET', 'POST'],
     credentials: true
   },
   connectionStateRecovery: {
