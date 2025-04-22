@@ -37,7 +37,7 @@ app.use(express.urlencoded({ extended: true }));
 // Socket.IO Setup
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL,
+    origin: 'https://qalaqobana.vercel.app',
     methods: ['GET', 'POST'],
     credentials: true
   },
